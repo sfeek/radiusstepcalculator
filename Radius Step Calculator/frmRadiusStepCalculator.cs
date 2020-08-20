@@ -72,46 +72,85 @@ namespace Radius_Step_Calculator
             startangle = (-startangle + 90.0) % 360.0;
             endangle = (-endangle + 90.0) % 360.0;
 
-            for (a = startangle; a >= endangle; a -= angleinc)
+            if (rbConcave.Checked == true)
             {
-                radians = Math.PI / 180.0 * a;
-
-                x = radius * Math.Cos(radians);
-                y = radius * Math.Sin(radians);
-
-                d = CheckXYDirection(a, rbConcave.Checked);
-
-                if (chkInc.Checked == true)
+                for (a = startangle; a >= endangle; a -= angleinc)
                 {
-                    if (lastx == 0.0 && lasty == 0.0)
-                        text.Append(@"\b Start X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\tab Start Y = " + String.Format("{0:0.0000}", y + centeryoffset) + @"\b0");
+                    radians = Math.PI / 180.0 * a;
+
+                    d = CheckXYDirectionCW(a);
+
+                    x = radius * Math.Cos(radians);
+                    y = radius * Math.Sin(radians);
+
+                    if (chkInc.Checked == true)
+                    {
+                        if (lastx == 0.0 && lasty == 0.0)
+                            text.Append(@"\b Start X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\tab Start Y = " + String.Format("{0:0.0000}", y + centeryoffset) + @"\b0");
+                        else
+                        {
+                            if (d == 0)
+                                text.Append(@"\b X = " + String.Format("{0:0.0000}", x - lastx) + @"\b0\tab Y = " + String.Format("{0:0.0000}", y - lasty));
+                            else
+                                text.Append(@" X = " + String.Format("{0:0.0000}", x - lastx) + @"\tab\b Y = " + String.Format("{0:0.0000}", y - lasty) + @"\b0");
+                        }
+                    }
                     else
                     {
                         if (d == 0)
-                            text.Append(@"\b X = " + String.Format("{0:0.0000}", x - lastx) + @"\b0\tab Y = " + String.Format("{0:0.0000}", y - lasty));
+                            text.Append(@"\b X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\b0\tab Y = " + String.Format("{0:0.0000}", y + centeryoffset));
                         else
-                            text.Append(@" X = " + String.Format("{0:0.0000}", x - lastx) + @"\tab\b Y = " + String.Format("{0:0.0000}", y - lasty) + @"\b0");
+                            text.Append(@"X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\tab\b Y = " + String.Format("{0:0.0000}", y + centeryoffset) + @"\b0");
                     }
-                }
-                else
-                {
-                    if (d==0)
-                        text.Append(@"\b X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\b0\tab Y = " + String.Format("{0:0.0000}", y + centeryoffset));
-                    else
-                        text.Append(@"X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\tab\b Y = " + String.Format("{0:0.0000}", y + centeryoffset) + @"\b0");
-                }
 
-                text.Append(@"\line \line ");
+                    text.Append(@"\line \line ");
 
-                lastx = x;
-                lasty = y;
+                    lastx = x;
+                    lasty = y;
+                }
             }
+            else
+            {
+                for (a = endangle; a <= startangle; a += angleinc)
+                {
+                    radians = Math.PI / 180.0 * a;
 
+                    d = CheckXYDirectionCCW(a);
+
+                    x = radius * Math.Cos(radians);
+                    y = radius * Math.Sin(radians);
+
+                    if (chkInc.Checked == true)
+                    {
+                        if (lastx == 0.0 && lasty == 0.0)
+                            text.Append(@"\b Start X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\tab Start Y = " + String.Format("{0:0.0000}", y + centeryoffset) + @"\b0");
+                        else
+                        {
+                            if (d == 0)
+                                text.Append(@"\b X = " + String.Format("{0:0.0000}", x - lastx) + @"\b0\tab Y = " + String.Format("{0:0.0000}", y - lasty));
+                            else
+                                text.Append(@" X = " + String.Format("{0:0.0000}", x - lastx) + @"\tab\b Y = " + String.Format("{0:0.0000}", y - lasty) + @"\b0");
+                        }
+                    }
+                    else
+                    {
+                        if (d == 0)
+                            text.Append(@"\b X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\b0\tab Y = " + String.Format("{0:0.0000}", y + centeryoffset));
+                        else
+                            text.Append(@"X = " + String.Format("{0:0.0000}", x + centerxoffset) + @"\tab\b Y = " + String.Format("{0:0.0000}", y + centeryoffset) + @"\b0");
+                    }
+
+                    text.Append(@"\line \line ");
+
+                    lastx = x;
+                    lasty = y;
+                }
+            }
             text.Append(@"}");
             txtOutput.Rtf = text.ToString();
         }
 
-        private int CheckXYDirection(double angle, bool cc)
+        private int CheckXYDirectionCW(double angle)
         {
             int d = 0;
 
@@ -122,7 +161,19 @@ namespace Radius_Step_Calculator
             if (angle > 180 && angle <= 270) d = 1;
             if (angle > 270 && angle <= 360) d = 0;
 
-            if (!cc) d = 1 - d;
+            return d;
+        }
+
+        private int CheckXYDirectionCCW(double angle)
+        {
+            int d = 0;
+
+            angle = Math.Abs(angle - 90.0);
+
+            if (angle >= 0 && angle < 90) d = 1;
+            if (angle >= 90 && angle < 180) d = 0;
+            if (angle >= 180 && angle < 270) d = 1;
+            if (angle >= 270 && angle < 360) d = 0;
 
             return d;
         }

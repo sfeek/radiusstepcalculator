@@ -297,7 +297,7 @@
             this.Controls.Add(this.txtRadius);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmRadiusStepCalculator";
-            this.Text = "Radius Step Calculator v1.11";
+            this.Text = "Radius Step Calculator v1.15";
             this.pnlConcaveConvex.ResumeLayout(false);
             this.pnlConcaveConvex.PerformLayout();
             this.ResumeLayout(false);
