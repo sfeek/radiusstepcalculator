@@ -54,10 +54,10 @@
     <ApplicationIcon>vector_radius_icon_138054.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>97EC4E15538A4E126776933F5711D90E2FFD12E1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>77CA5E187B39A42227A9A65469184EA903096B56</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Radius Step Calculator_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Radius Step Calculator_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -108,6 +108,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Radius Step Calculator_1_TemporaryKey.pfx" />
     <None Include="Radius Step Calculator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
