@@ -16,6 +16,7 @@ namespace Radius_Step_Calculator
         {
             InitializeComponent();
             rbConcave.Checked = true;
+            rbConventional.Checked = true;
             txtOutput.SelectionTabs = new int[] { 150 };
             chkInc.Checked = true;
         }
@@ -37,6 +38,7 @@ namespace Radius_Step_Calculator
             double lastx=0.0;
             double lasty=0.0;
             int d;
+            bool cw = true;
 
             StringBuilder text = new StringBuilder();
             text.Append(@"{\rtf1\ansi ");
@@ -73,6 +75,14 @@ namespace Radius_Step_Calculator
             endangle = (-endangle + 90.0) % 360.0;
 
             if (rbConcave.Checked == true)
+                cw = true;
+            else
+                cw = false;
+
+            if (rbClimb.Checked == true)
+                cw = !cw;
+
+            if (cw == true)
             {
                 for (a = startangle; a >= endangle; a -= angleinc)
                 {
