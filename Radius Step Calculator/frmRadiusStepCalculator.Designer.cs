@@ -56,6 +56,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbConventional = new System.Windows.Forms.RadioButton();
             this.rbClimb = new System.Windows.Forms.RadioButton();
+            this.txtFormat = new System.Windows.Forms.TextBox();
+            this.lblFormat = new System.Windows.Forms.Label();
             this.pnlConcaveConvex.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +68,7 @@
             this.txtRadius.Name = "txtRadius";
             this.txtRadius.Size = new System.Drawing.Size(100, 22);
             this.txtRadius.TabIndex = 0;
+            this.txtRadius.Text = "0.0";
             // 
             // lblRadius
             // 
@@ -204,7 +207,7 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.Location = new System.Drawing.Point(397, 414);
+            this.btnCalculate.Location = new System.Drawing.Point(514, 414);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(150, 46);
             this.btnCalculate.TabIndex = 18;
@@ -246,7 +249,7 @@
             // chkInc
             // 
             this.chkInc.AutoSize = true;
-            this.chkInc.Location = new System.Drawing.Point(260, 428);
+            this.chkInc.Location = new System.Drawing.Point(250, 402);
             this.chkInc.Name = "chkInc";
             this.chkInc.Size = new System.Drawing.Size(98, 20);
             this.chkInc.TabIndex = 21;
@@ -286,7 +289,7 @@
             this.rbConventional.AutoSize = true;
             this.rbConventional.Location = new System.Drawing.Point(7, 32);
             this.rbConventional.Name = "rbConventional";
-            this.rbConventional.Size = new System.Drawing.Size(161, 25);
+            this.rbConventional.Size = new System.Drawing.Size(129, 20);
             this.rbConventional.TabIndex = 1;
             this.rbConventional.TabStop = true;
             this.rbConventional.Text = "Conventional Mill";
@@ -303,11 +306,31 @@
             this.rbClimb.Text = "Climb Mill";
             this.rbClimb.UseVisualStyleBackColor = true;
             // 
+            // txtFormat
+            // 
+            this.txtFormat.Location = new System.Drawing.Point(355, 437);
+            this.txtFormat.MaxLength = 7;
+            this.txtFormat.Name = "txtFormat";
+            this.txtFormat.Size = new System.Drawing.Size(77, 22);
+            this.txtFormat.TabIndex = 25;
+            this.txtFormat.Text = "0.000";
+            // 
+            // lblFormat
+            // 
+            this.lblFormat.AutoSize = true;
+            this.lblFormat.Location = new System.Drawing.Point(247, 440);
+            this.lblFormat.Name = "lblFormat";
+            this.lblFormat.Size = new System.Drawing.Size(102, 16);
+            this.lblFormat.TabIndex = 26;
+            this.lblFormat.Text = "Decimal Format";
+            // 
             // frmRadiusStepCalculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(721, 486);
+            this.Controls.Add(this.lblFormat);
+            this.Controls.Add(this.txtFormat);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblBold);
             this.Controls.Add(this.txtOutput);
@@ -334,7 +357,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmRadiusStepCalculator";
-            this.Text = "Radius Step Calculator v1.2";
+            this.Text = "Radius Step Calculator v1.25";
             this.pnlConcaveConvex.ResumeLayout(false);
             this.pnlConcaveConvex.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -373,6 +396,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton rbConventional;
         private System.Windows.Forms.RadioButton rbClimb;
+        private System.Windows.Forms.TextBox txtFormat;
+        private System.Windows.Forms.Label lblFormat;
     }
 }
 
