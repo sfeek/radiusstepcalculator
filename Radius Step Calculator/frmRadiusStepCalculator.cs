@@ -17,7 +17,7 @@ namespace Radius_Step_Calculator
             InitializeComponent();
             rbConcave.Checked = true;
             rbConventional.Checked = true;
-            txtOutput.SelectionTabs = new int[] { 150 };
+            txtOutput.SelectionTabs = new int[] { 100 };
             chkInc.Checked = true;
         }
 
@@ -35,6 +35,7 @@ namespace Radius_Step_Calculator
             double radians;
             double x;
             double y;
+            int linecount = 0;
             double lastx = 0.0;
             double lasty = 0.0;
             int d;
@@ -62,11 +63,17 @@ namespace Radius_Step_Calculator
                     return;
                 }
 
+                if (rbConcave.Checked == true && toolradius >= radius) 
+                {
+                    txtOutput.Rtf = "{\\rtf1\\ansi Radius must be > Tool Radius for Concave Radii!}";
+                    return;
+                }
+
                 centerxoffset = Convert.ToDouble(txtXOffset.Text);
                 centeryoffset = Convert.ToDouble(txtYOffset.Text);
 
                 startangle = Convert.ToDouble(txtStartAngle.Text);
-                endangle = Convert.ToDouble(txtEndAngle.Text);
+                endangle = Convert.ToDouble(txtEndAngle.Text); 
 
                 if (txtAngleInc.Text != String.Empty && txtArcLength.Text != String.Empty)
                 {
@@ -74,18 +81,21 @@ namespace Radius_Step_Calculator
                     return;
                 }
 
-                if (txtAngleInc.Text != String.Empty) angleinc = Convert.ToDouble(txtAngleInc.Text);
+                if (txtAngleInc.Text != String.Empty)
+                {
+                    angleinc = Convert.ToDouble(txtAngleInc.Text);
+
+                    if (angleinc < 0.0001)
+                    {
+                        txtOutput.Rtf = "{\\rtf1\\ansi Angle Increment must be > 0!}";
+                        return;
+                    }
+                }
 
                 if (txtArcLength.Text != String.Empty)
                 {
                     arclength = Convert.ToDouble(txtArcLength.Text);
                     angleinc = (180.0 * arclength) / (Math.PI * radius);
-                }
-
-                if (angleinc < 0.0001)
-                {
-                    txtOutput.Rtf = "{\\rtf1\\ansi Angle Increment must be >= 0.0001!}";
-                    return;
                 }
 
                 if (rbConcave.Checked == true)
@@ -121,6 +131,8 @@ namespace Radius_Step_Calculator
             if (rbClimb.Checked == true)
                 cw = !cw;
 
+            linecount = 0;
+
             if (cw == true)
             {
                 for (a = startangle; a >= endangle; a -= angleinc)
@@ -139,23 +151,24 @@ namespace Radius_Step_Calculator
                         else
                         {
                             if (d == 0)
-                                text.Append(@"\b X = " + String.Format(nfmt, x - lastx) + @"\b0\tab Y = " + String.Format(nfmt, y - lasty));
+                                text.Append("#" + System.Convert.ToString(linecount) + @"\tab\b X = " + String.Format(nfmt, x - lastx) + @"\b0\tab Y = " + String.Format(nfmt, y - lasty));
                             else
-                                text.Append(@" X = " + String.Format(nfmt, x - lastx) + @"\tab\b Y = " + String.Format(nfmt, y - lasty) + @"\b0");
+                                text.Append("#" + System.Convert.ToString(linecount) + @"\tab X = " + String.Format(nfmt, x - lastx) + @"\tab\b Y = " + String.Format(nfmt, y - lasty) + @"\b0");
                         }
                     }
                     else
                     {
                         if (d == 0)
-                            text.Append(@"\b X = " + String.Format(nfmt, x + centerxoffset) + @"\b0\tab Y = " + String.Format(nfmt, y + centeryoffset));
+                            text.Append("#" + System.Convert.ToString(linecount) + @"\tab\b X = " + String.Format(nfmt, x + centerxoffset) + @"\b0\tab Y = " + String.Format(nfmt, y + centeryoffset));
                         else
-                            text.Append(@"X = " + String.Format(nfmt, x + centerxoffset) + @"\tab\b Y = " + String.Format(nfmt, y + centeryoffset) + @"\b0");
+                            text.Append("#" + System.Convert.ToString(linecount) + @"\tab X = " + String.Format(nfmt, x + centerxoffset) + @"\tab\b Y = " + String.Format(nfmt, y + centeryoffset) + @"\b0");
                     }
 
-                    text.Append(@"\line \line ");
+                    text.Append(@"\line\line");
 
                     lastx = x;
                     lasty = y;
+                    linecount++;
                 }
             }
             else
@@ -176,23 +189,24 @@ namespace Radius_Step_Calculator
                         else
                         {
                             if (d == 0)
-                                text.Append(@"\b X = " + String.Format(nfmt, x - lastx) + @"\b0\tab Y = " + String.Format(nfmt, y - lasty));
+                                text.Append("#" + System.Convert.ToString(linecount) + @"\tab\b X = " + String.Format(nfmt, x - lastx) + @"\b0\tab Y = " + String.Format(nfmt, y - lasty));
                             else
-                                text.Append(@" X = " + String.Format(nfmt, x - lastx) + @"\tab\b Y = " + String.Format(nfmt, y - lasty) + @"\b0");
+                                text.Append("#" + System.Convert.ToString(linecount) + @"\tab X = " + String.Format(nfmt, x - lastx) + @"\tab\b Y = " + String.Format(nfmt, y - lasty) + @"\b0");
                         }
                     }
                     else
                     {
                         if (d == 0)
-                            text.Append(@"\b X = " + String.Format(nfmt, x + centerxoffset) + @"\b0\tab Y = " + String.Format(nfmt, y + centeryoffset));
+                            text.Append("#" + System.Convert.ToString(linecount) + @"\tab\b X = " + String.Format(nfmt, x + centerxoffset) + @"\b0\tab Y = " + String.Format(nfmt, y + centeryoffset));
                         else
-                            text.Append(@"X = " + String.Format(nfmt, x + centerxoffset) + @"\tab\b Y = " + String.Format(nfmt, y + centeryoffset) + @"\b0");
+                            text.Append("#" + System.Convert.ToString(linecount) + @"\tab X = " + String.Format(nfmt, x + centerxoffset) + @"\tab\b Y = " + String.Format(nfmt, y + centeryoffset) + @"\b0");
                     }
 
-                    text.Append(@"\line \line ");
+                    text.Append(@"\line\line");
 
                     lastx = x;
                     lasty = y;
+                    linecount++;
                 }
             }
             text.Append(@"}");
