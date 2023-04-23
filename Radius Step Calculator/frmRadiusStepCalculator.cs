@@ -120,9 +120,6 @@ namespace Radius_Step_Calculator
 
             txtOutput.Text = String.Empty;
 
-            startangle = (-startangle + 90.0) % 360.0;
-            endangle = (-endangle + 90.0) % 360.0;
-
             if (rbConcave.Checked == true)
                 cw = true;
             else
@@ -135,14 +132,14 @@ namespace Radius_Step_Calculator
 
             if (cw == true)
             {
-                for (a = startangle; a >= endangle; a -= angleinc)
+                for (a = startangle; a <= endangle; a += angleinc)
                 {
-                    radians = Math.PI / 180.0 * a;
+                    radians = (Math.PI / 180.0) * a;
 
                     d = CheckXYDirectionCW(a);
 
-                    x = radius * Math.Cos(radians);
-                    y = radius * Math.Sin(radians);
+                    x = radius * Math.Sin(radians);
+                    y = radius * Math.Cos(radians);
 
                     if (chkInc.Checked == true)
                     {
@@ -173,14 +170,14 @@ namespace Radius_Step_Calculator
             }
             else
             {
-                for (a = endangle; a <= startangle; a += angleinc)
+                for (a = endangle; a >= startangle; a -= angleinc)
                 {
-                    radians = Math.PI / 180.0 * a;
+                    radians = (Math.PI / 180.0) * a;
 
                     d = CheckXYDirectionCCW(a);
 
-                    x = radius * Math.Cos(radians);
-                    y = radius * Math.Sin(radians);
+                    x = radius * Math.Sin(radians);
+                    y = radius * Math.Cos(radians);
 
                     if (chkInc.Checked == true)
                     {
@@ -217,7 +214,7 @@ namespace Radius_Step_Calculator
         {
             int d = 0;
 
-            angle = Math.Abs(angle - 90.0);
+            angle = Math.Abs(angle) % 360.0;
 
             if (angle > 0 && angle <= 90) d = 1;
             if (angle > 90 && angle <= 180) d = 0;
@@ -231,7 +228,7 @@ namespace Radius_Step_Calculator
         {
             int d = 0;
 
-            angle = Math.Abs(angle - 90.0);
+            angle = Math.Abs(angle) % 360.0;
 
             if (angle >= 0 && angle < 90) d = 1;
             if (angle >= 90 && angle < 180) d = 0;
